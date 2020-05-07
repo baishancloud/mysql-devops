@@ -33,6 +33,7 @@ from boto3.exceptions import S3UploadFailedError
 from boto3.s3.transfer import TransferConfig
 from botocore.client import Config
 from botocore.exceptions import ClientError
+from retrying import retry
 
 logger = logging.getLogger(__name__)
 
@@ -742,6 +743,8 @@ class MysqlBackup(object):
         bc = boto_client(self.bkp_conf['s3_host'],
                          self.bkp_conf['s3_access_key'],
                          self.bkp_conf['s3_secret_key'])
+
+        @retry(stop_max_attempt_number=3)
         resp = boto_get(bc,
                         self.render('{backup_tgz_des3}'),
                         self.render('{s3_bucket}'),

@@ -1,0 +1,69 @@
+worker1:
+        WriteWorkerCnt: 2
+
+        SourceConn:
+            Addr: 127.0.0.1:3333
+            Host: 127.0.0.1
+            Port: "3333"
+            User: admin
+            Password: password
+            DBName: mysql
+
+        DBConfig:
+            4444:
+                Addr: 127.0.0.2:4444
+                Host: 127.0.0.2
+                Port: "4444"
+                User: admin
+                Password: password
+                DBName: mysql
+
+        Shards:
+            -
+                From: [field0, field1, field2, ...]
+                Table: destination table
+                DBPort: "4444"
+
+        TableName: sorce table
+        TableField: []
+        TableShard: []
+        TableIndex: []
+
+        GTIDSet: string
+        BinlogFile: mysql-bin.000001
+        BinlogPos: 4
+
+worker2:
+        WriteWorkerCnt: 2
+
+        SourceConn:
+            Addr: 127.0.0.1:5555
+            Host: 127.0.0.1
+            Port: "5555"
+            User: admin
+            Password: password
+            DBName: mysql
+
+        DBConfig:
+            6666:
+                Addr: 127.0.0.2:6666
+                Host: 127.0.0.2
+                Port: "6666"
+                User: admin
+                Password: password
+                DBName: mysql
+
+        Shards:
+            -
+                From: [field0, field1, field2, ...]
+                Table: destination table
+                DBPort: "6666"
+
+        TableName: source table
+        TableField: []
+        TableShard: []
+        TableIndex: []
+
+        GTIDSet: string
+        BinlogFile: mysql-bin.000001
+        BinlogPos: 4
